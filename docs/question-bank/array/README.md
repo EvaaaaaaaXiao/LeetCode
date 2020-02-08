@@ -89,4 +89,76 @@ var twoSum = function(nums, target) {
 
 
 
-#### 若题目数组有重复内容
+
+
+## 26、删除排序数组中的重复项
+
+[题目地址](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
+
+### 题目描述
+给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+
+不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+
+示例:
+
+```
+给定 nums = [0,0,1,1,1,2,2,3,3,4],
+
+函数应该返回新的长度 5, 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4。
+
+你不需要考虑数组中超出新长度后面的元素。
+```
+
+
+
+### 题解
+
+#### 解法一（100ms)
+
+题目中的**“排序数组”**意味着每轮对比无需从头到尾，他一定是从小到大或是从大到小排序的
+
+使用 splice 将重复的元素直接从原数组中移除，最终留下的就是所需的新数组内容
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var removeDuplicates = function(nums) {
+    for(var i=0;i<nums.length;){
+        if(nums[i] == nums[i+1]){
+            nums.splice(i+1,1)
+        }else{
+            i++
+        }
+    }
+    return nums.length
+};
+```
+
+
+
+#### 解法二（80ms）
+
+**双指针算法**
+
+题目中的**“前n个元素被修改，不用考虑超出新长度后的元素”**意味着无需将原数组处理成和输出数组一样，只要将不重复的内容赋值或者移动到前n位就行，没必要删去多余的数组内容，题目标题略有误导性
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var removeDuplicates = function(nums) {
+    var index = 0
+    var len = nums.length
+    for(var i=1;i<len;i++){
+        if(nums[i] != nums[i-1]){
+            index++
+            nums[index]=nums[i]
+        }
+    }
+    return index+1
+};
+```
