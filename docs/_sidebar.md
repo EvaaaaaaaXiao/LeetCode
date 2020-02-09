@@ -1,4 +1,7 @@
 * 题库
-  * [数组](question-bank/array/)
+  * 数据结构
+    * [数组](question-bank/array/)
+    * [字符串](question-bank/string/)
 * 理论知识
-  * [数据类型](theory/data-type/)
+  * [数据结构](theory/data-structure/)
+
