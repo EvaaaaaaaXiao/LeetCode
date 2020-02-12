@@ -161,3 +161,66 @@ var str = "Hello world, welcome to the Runoob.";
 var n = str.startsWith("Hello"); //true
 var m = str.startsWith("world", 6); //true
 ```
+
+
+
+## 28、实现strStr()
+
+[题目地址](https://leetcode-cn.com/problems/implement-strstr/)
+
+### 题目描述
+实现 `strStr()` 函数。
+
+给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回**  -1**。
+
+示例1:
+
+```
+输入: haystack = "hello", needle = "ll"
+输出: 2
+```
+
+示例2:
+
+```
+输入: haystack = "aaaaa", needle = "bba"
+输出: -1
+```
+
+**说明:**
+
+当 `needle` 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+
+对于本题而言，当 `needle` 是空字符串时我们应当返回 0 。这与C语言的 `strstr()` 以及 Java的 `indexOf()` 定义相符。
+
+
+
+### 题解
+
+#### 解法（68ms)
+
+**！用了 `substr` ，不是好解法，**是第一反应还是提交了
+
+用 needle 的第一个字符去 haystack 匹配，再用 `substr` 截取 needle 长度的字符串与 needle 匹配
+
+```javascript
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+var strStr = function(haystack, needle) {
+    var h = haystack.length
+    var n = needle.length
+    if (h < n) return -1
+    if (n == 0) return 0
+    var index = -1
+    for(var i=0;i<h;i++){
+        if(haystack[i] == needle[0] && haystack.substr(i,i+n) == needle){
+            index = i
+            break
+        }
+    }
+    return index
+};
+```
