@@ -5,5 +5,5 @@
     * [栈](question-bank/stack/)
 * 理论知识
   * [数据结构](theory/data-structure/)
-  * [算法](theory/algorithm)
+  * [算法](theory/algorithm/)
 
