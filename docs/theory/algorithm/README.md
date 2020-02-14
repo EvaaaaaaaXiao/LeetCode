@@ -63,35 +63,35 @@ Knuth-Morris-Pratt算法（简称KMP）是最常用的**字符串匹配**算法�
 
 以 `BABCDAB ABCDABD` 和 `ABCDABD` 为例：
 
-1. 
+1、
 ```
 BABCDAB ABCDABD
 ABCDABD
 ```
 **首个元素** ' A ' 与 'B' 未能匹配上，此时**直接后移一位**
 
-2. 
+2、
 ```
 BABCDAB ABCDABD
  ABCDABD
 ```
 一位位比较，发现' D ' 与 '  ' 未能匹配上，此时算法知道前面已匹配上的内容是 `ABCDAB` ，那么往后移一位也肯定是无法匹配上的，所以利用**最后一个匹配上的元素**  ' B ' 对应的部分匹配值按照移位公式来移动 `6 - 2 = 4` 位
 
-3. 
+3、
 ```
 BABCDAB ABCDABD
      ABCDABD
 ```
 发现' C ' 与 '  ' 未能匹配上，利用**最后一个匹配上的元素**  ' B ' 对应的部分匹配值按照移位公式来移动 `2 - 0 = 2` 位
 
-4. 
+4、
 ```
 BABCDAB ABCDABD
        ABCDABD
 ```
 首个元素 ' A ' 与 '  ' 未能匹配上，直接后移一位
 
-5. 
+5、
 ```
 BABCDAB ABCDABD
         ABCDABD
@@ -156,21 +156,21 @@ BABCDAB ABCDABD
 
 以 `HERE IS A SIMPLE EXAMPLE` 和 `EXAMPLE` 为例：
 
-1. 
+1、
 ```
 HERE IS A SIMPLE EXAMPLE
 EXAMPLE
 ```
 从尾部开始进行匹配，如果尾部无法匹配，则前面的内容也无需比较了。发现 ' S ' 和 ' E ' 未能匹配上，则称文本中的 ' S ' 为坏字符，且匹配内容中并不含 ' S ' ，所以按照坏字符规则来移动 `6 - (-1) = 7` 位
 
-2. 
+2、
 ```
 HERE IS A SIMPLE EXAMPLE
        EXAMPLE
 ```
 发现 ' P ' 和 ' E ' 未能匹配上，则称文本中的 ' P ' 为坏字符，匹配内容中含有 ' P ' ，' P '最后一次出现的位置为4，所以按照坏字符规则来移动 `6 - (4) = 2` 位
 
-3. 
+3、
 ```
 HERE IS A SIMPLE EXAMPLE
          EXAMPLE
@@ -187,14 +187,14 @@ HERE IS A SIMPLE EXAMPLE
 
 由于好后缀的移动位数更大，所以按照好后缀规则来移动 6 位
 
-4. 
+4、
 ```
 HERE IS A SIMPLE EXAMPLE
                EXAMPLE
 ```
 发现 ' P ' 和 ' E ' 未能匹配上，所以按照坏字符规则来移动 `6 - (4) = 2` 位
 
-5. 
+5、
 ```
 HERE IS A SIMPLE EXAMPLE
                  EXAMPLE
