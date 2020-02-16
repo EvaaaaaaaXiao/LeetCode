@@ -271,7 +271,7 @@ var strStr = function(haystack, needle) {
 
 输入 `n` ，输出的则是对 `n-1` 项的值的描述。这个描述可以理解为**"几个几"**，就是要**将相同的元素分成一组**，用“a个b"、"c个d”……来描述，最终输出的就是 abcd…… 这样的一个字符串。
 
-#### 解法（68ms)
+#### 解法一（76ms)
 
 每一项的内容是和前一项息息相关的，所以可以用**递归**的思想。
 
@@ -298,6 +298,26 @@ var countAndSay = function(n) {
         else
             result += count + prev
     }
+    return result
+};
+```
+
+#### 解法二（64ms)
+
+还是**递归**的思想，但是是用**正则表达式**将连续相同的数字分成几组，对每组数据获取长度与其中一个元素，即可得到我们要的"几个几"
+
+此处用到的正则为 内容为数字`(\d) `且重复正则第一个圆括号内匹配到的内容`\1 ` 连续0次或者无数次`*`的全局匹配`g`
+
+```javascript
+/**
+ * @param {number} n
+ * @return {string}
+ */
+var countAndSay = function(n) {
+    if(n == 1) return '1';
+    result = countAndSay(n-1).replace(/(\d)\1*/g, function(item){
+        return item.length+item[0]
+    });
     return result
 };
 ```
