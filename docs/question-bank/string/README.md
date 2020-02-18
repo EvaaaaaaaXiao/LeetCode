@@ -367,3 +367,57 @@ var lengthOfLastWord = function(s) {
     return len
 };
 ```
+
+
+
+## 67、二进制求和
+
+[题目地址](https://leetcode-cn.com/problems/add-binary/)
+
+### 题目描述
+给定两个二进制字符串，返回他们的和（用二进制表示）。
+
+输入为非空字符串且只包含数字` 1` 和` 0`。
+
+示例1:
+
+```
+输入: a = "11", b = "1"
+输出: "100"
+```
+
+示例2:
+
+```
+输入: a = "1010", b = "1011"
+输出: "10101"
+```
+
+### 题解
+
+#### 解法（80ms)
+
+创建一个进位的变量，从字符串最后一个元素开始，对应的内容与进位相加，因为合只可能为0，1，2 (10)，3 (11)这四种情况，所以将` 和%2 `作为当前位的值，将` 和/2 `作为进位存放
+
+```javascript
+/**
+ * @param {string} a
+ * @param {string} b
+ * @return {string}
+ */
+var addBinary = function(a, b) {
+    var more = 0;
+    var result = '';
+    for(var i=a.length-1,j=b.length-1;i>=0||j>=0;i--,j--){
+        var sum = more;
+        sum = sum + (i>=0 ? parseInt(a[i]) : 0);
+        sum = sum + (j>=0 ? parseInt(b[j]) : 0);
+        result = (sum%2).toString() + result;
+        more = Math.floor(sum/2);
+    }
+    if(more == 1){
+        result = more.toString() + result;
+    }
+    return result;
+};
+```
