@@ -12,8 +12,6 @@
 输出：1->1->2->3->4->4
 ```
 
-
-
 ### 题解
 
 #### 解法（76ms)
@@ -30,7 +28,6 @@ l2 : 1->3->4
 4、由于3 < 4 ，所以 l1.next 指向 l2，1->1->2->3，继续用 l2.next 与 l1 比较
 5、由于4 == 4 ，所以不改变还是指向 l2，1->1->2->3->4，继续用 l2.next 与 l1 比较
 6、由于 l2.next == null，也就是当前的 l2 为null，所以可以结束比较了，直接指向还没有结束的 l1 ，1->1->2->3->4->4->5
-
 
 ```javascript
 /**
@@ -55,5 +52,60 @@ var mergeTwoLists = function(l1, l2) {
         l1.next = mergeTwoLists(l1.next, l2)
         return l1
     }
+};
+```
+
+
+
+
+## 83、删除排序链表中的重复元素
+
+[题目地址](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/)
+
+### 题目描述
+给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。
+
+示例1:
+
+```
+输入: 1->1->2
+输出: 1->2
+```
+
+示例2:
+
+```
+输入: 1->1->2->3->3
+输出: 1->2->3
+```
+
+### 题解
+
+#### 解法（76ms)
+
+对比当前元素与下一个元素的值，相同则当前元素指向改变，指向下一个的下一个，不同则当前元素指向下一个不变。
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function(head) {
+    var current = head;
+    while(current && current.next){
+        if(current.val == current.next.val){
+            current.next = current.next.next
+        }else{
+            current = current.next
+        }
+    }
+    return head
 };
 ```
