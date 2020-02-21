@@ -4,6 +4,7 @@
     * [字符串](question-bank/string/)
     * [栈](question-bank/stack/)
     * [链表](question-bank/linked-list/)
+    * [哈希表](question-bank/hash-table/)
 * 理论知识
   * [数据结构](theory/data-structure/)
   * [算法](theory/algorithm/)
