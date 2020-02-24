@@ -421,3 +421,50 @@ var addBinary = function(a, b) {
     return result;
 };
 ```
+
+
+
+## 125、验证回文串
+
+[题目地址](https://leetcode-cn.com/problems/valid-palindrome/)
+
+### 题目描述
+给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+
+**说明**：本题中，我们将空字符串定义为有效的回文串。
+
+示例1:
+
+```
+输入: "A man, a plan, a canal: Panama"
+输出: true
+```
+
+示例2:
+
+```
+输入: "race a car"
+输出: false
+```
+
+### 题解
+
+#### 解法（64ms)
+
+先将字符串去除数字字母外的其他元素，并统一字母的大小写。用**双指针**的思想，一个从左至右，一个从右至左，从两头逼近中间，对比头尾内容是否符合回文串，一旦有不一样的，就输出false
+
+```javascript
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function(s) {
+    var str = s.replace(/[^0-9a-zA-Z]/g,"").toLowerCase()
+    for(var i=0,j=str.length-1;i<j;i++,j--){
+        if(str[i]!=str[j]){
+            return false
+        }
+    }
+    return true
+};
+```
