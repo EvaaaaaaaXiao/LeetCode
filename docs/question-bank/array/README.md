@@ -279,3 +279,31 @@ var searchInsert = function(nums, target) {
     return result
 };
 ```
+
+
+
+#### 解法二（104ms)
+
+用**二分查找**的思想
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var searchInsert = function(nums, target) {
+    var left = 0, right = nums.length -1;
+    if(target > nums[right]) return right + 1;
+    while(left < right){
+        var middle = Math.floor((left + right) >>> 1);
+        if(target > nums[middle]){
+            left = middle + 1
+        }
+        else{
+            right = middle
+        }
+    }
+    return right
+};
+```
