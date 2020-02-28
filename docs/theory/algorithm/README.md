@@ -1,6 +1,6 @@
 ## KMP算法 (字符串匹配)
 
-> 算法解释自行整理自[阮一峰的字符串匹配的KMP算法](http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html)
+> 算法解释自行整理自[阮一峰的《字符串匹配的KMP算法》](http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html)
 
 > KMP是从前往后匹配
 
@@ -104,8 +104,8 @@ BABCDAB ABCDABD
 ## BM算法 (字符串匹配)
 
 > 算法解释自行整理自
-> [阮一峰的字符串匹配的Boyer-Moore算法](http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html)
-> [匠心十年的Boyer-Moore 字符串匹配算法](https://www.cnblogs.com/gaochundong/p/boyer_moore_string_matching_algorithm.html)
+> [阮一峰的《字符串匹配的Boyer-Moore算法》](http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html)
+> [匠心十年的《Boyer-Moore 字符串匹配算法》](https://www.cnblogs.com/gaochundong/p/boyer_moore_string_matching_algorithm.html)
 
 > BM是从后往前匹配
 
@@ -205,3 +205,6 @@ HERE IS A SIMPLE EXAMPLE
 
 
 ## 二分查找
+
+> 算法解释自行整理自
+> [LeetCode用户@liweiwei1419的《用“排除法”（减治思想）写二分查找问题》](https://leetcode-cn.com/problems/search-insert-position/solution/te-bie-hao-yong-de-er-fen-cha-fa-fa-mo-ban-python-/)
