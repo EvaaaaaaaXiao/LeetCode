@@ -284,7 +284,13 @@ var searchInsert = function(nums, target) {
 
 #### 解法二（104ms)
 
-用**二分查找**的思想
+用**二分查找**的思想。
+- 首先，将`target`大于最右的元素作为一个特例列出来；
+- 其次，锁定查找的初始范围，为`[ left , right ]`，中位数`middle`为` (left + right) >>> 1` （其中 `>>>1`为二进制右移 1 位，可以理解为除以2），此处是**向下取整**
+- 若 nums[middle] 小于target，查找范围变为`[ middle+1 , right]`，也就是中位数左侧包括中位数都是远小于target的，可以**一并排除**
+- 若 nums[middle] 大于或是等于target，查找范围变为`[ left , middle]`，也就是中位数右侧都是远大于target的，可以**一并排除**
+- 一直到`left == right`为止
+- 最终return left 还是 right 都可以，因为此时两个值是一样的
 
 ```javascript
 /**
