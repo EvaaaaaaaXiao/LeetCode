@@ -313,3 +313,66 @@ var searchInsert = function(nums, target) {
     return right
 };
 ```
+
+
+
+## 面试题 10.01、合并排序的数组
+
+[题目地址](https://leetcode-cn.com/problems/sorted-merge-lcci/)
+
+### 题目描述
+给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。
+
+初始化 A 和 B 的元素数量分别为 m 和 n。
+
+示例:
+
+```
+输入:
+A = [1,2,3,0,0,0], m = 3
+B = [2,5,6],       n = 3
+
+输出: [1,2,2,3,5,6]
+```
+
+
+
+### 题解
+
+#### 解法（68ms)
+
+用双指针的思想
+
+当`m`与`n`都不为零时，由于A数组已经预留好了空间，所以考虑从后往前比较两个数组的值，将值较大的填入A数组后部。若从前往后比较，必定会覆盖A数组原元素，很不方便
+
+当`m = 0`跳出循环时，依次填入B数组剩下的排序内容即可
+
+当`n = 0`跳出循环时，无需再去动A数组，它本身就是已经排好序的了
+
+```javascript
+/**
+ * @param {number[]} A
+ * @param {number} m
+ * @param {number[]} B
+ * @param {number} n
+ * @return {void} Do not return anything, modify A in-place instead.
+ */
+var merge = function(A, m, B, n) {
+    let len = A.length - 1;
+    while(m && n){
+        if(A[m - 1] > B[n - 1]){
+            A[len] = A[m - 1];
+            m--;
+        }else{
+            A[len] = B[n - 1];
+            n--;
+        }
+        len--;
+    }
+    while(n){
+        A[len] = B[n - 1];
+        n--;
+        len--;
+    }
+};
+```
