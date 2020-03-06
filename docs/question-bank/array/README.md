@@ -376,3 +376,63 @@ var merge = function(A, m, B, n) {
     }
 };
 ```
+
+
+
+## 面试题57 - II、和为s的连续正数序列
+
+[题目地址](https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/)
+
+### 题目描述
+输入一个正整数` target` ，输出所有和为` target` 的连续正整数序列（至少含有两个数）。
+
+序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
+
+示例1:
+
+```
+输入：target = 9
+输出：[[2,3,4],[4,5]]
+```
+
+示例2:
+
+```
+输入：target = 15
+输出：[[1,2,3,4,5],[4,5,6],[7,8]]
+```
+
+**限制**：
+
+- 1 <= target <= 10^5
+
+
+### 题解
+
+#### 解法（80ms)
+
+在` [1, 中位数+1]`的范围中，用**滑动窗口**计算窗口内容的和，将其与`target`进行比较。
+
+**注意：要对每组符合的数组进行深拷贝**
+
+```javascript
+/**
+ * @param {number} target
+ * @return {number[][]}
+ */
+var findContinuousSequence = function(target) {
+    if(target<3) return [];
+    var index = Math.floor(target/2) + 1, sum = 0, item = [], result = [];
+    for(var i = 1;i <= index;i++) {
+        sum += i;
+        item.push(i);
+        while(sum > target){
+            sum -= item.shift();
+        }
+        if(sum === target){
+            result.push(Array.from(item));
+        }
+    }
+    return result;
+};
+```
