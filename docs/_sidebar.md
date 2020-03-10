@@ -5,6 +5,7 @@
     * [栈](question-bank/stack/)
     * [链表](question-bank/linked-list/)
     * [哈希表](question-bank/hash-table/)
+    * [树](question-bank/tree/)
   * 算法
     * [广度优先搜索](question-bank/breadth-first-search/)
     * [动态规划](question-bank/dynamic-programming)
