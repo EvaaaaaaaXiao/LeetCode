@@ -316,6 +316,75 @@ var searchInsert = function(nums, target) {
 
 
 
+## 1013、将数组分成和相等的三个部分
+
+[题目地址](https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum/
+
+### 题目描述
+给你一个整数数组` A`，只有可以将其划分为三个和相等的非空部分时才返回` true`，否则返回 `false`。
+
+形式上，如果可以找出索引` i+1 < j `且满足` (A[0] + A[1] + ... + A[i] == A[i+1] + A[i+2] + ... + A[j-1] == A[j] + A[j-1] + ... + A[A.length - 1]) `就可以将数组三等分。
+
+示例1:
+
+```
+输出：[0,2,1,-6,6,-7,9,1,2,0,1]
+输出：true
+解释：0 + 2 + 1 = -6 + 6 - 7 + 9 + 1 = 2 + 0 + 1  
+```
+
+示例2:
+
+```
+输入：[0,2,1,-6,6,7,9,-1,2,0,1]
+输出：false 
+```
+
+示例3:
+
+```
+输入：[3,3,6,5,-2,2,5,1,-9,4]
+输出：true
+解释：3 + 3 = 6 = 5 - 2 + 2 + 5 + 1 - 9 + 4
+```
+
+**提示**：
+1. `3 <= A.length <= 50000`
+2. `-10^4 <= A[i] <= 10^4`
+
+### 题解
+
+#### 解法（68ms)
+
+算出总和的三分之一的值，边循环边计算，等到和为三分之一的值后，截取数组
+
+```javascript
+/**
+ * @param {number[]} A
+ * @return {boolean}
+ */
+var canThreePartsEqualSum = function(A) {
+    var sum = 0;
+    for (var i = 0;i < A.length;i ++) {
+        sum += A[i];
+    }
+    var target = sum / 3;  
+    var count = 0;
+    var remain = 0;
+    for(var j = 0;j < A.length;j ++){
+        remain += A[j];
+        if(remain === target){
+            count++;
+            remain = 0;
+        }
+    }
+    if (target === 0 && count > 3) return true 
+    return count === 3
+};
+```
+
+
+
 ## 面试题 10.01、合并排序的数组
 
 [题目地址](https://leetcode-cn.com/problems/sorted-merge-lcci/)
