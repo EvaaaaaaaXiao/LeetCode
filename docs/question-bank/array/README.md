@@ -505,3 +505,56 @@ var findContinuousSequence = function(target) {
     return result;
 };
 ```
+
+
+
+## 169、多数元素
+
+[题目地址](https://leetcode-cn.com/problems/majority-element/)
+
+### 题目描述
+给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于` ⌊ n/2 ⌋ `的元素。
+
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+
+示例1:
+
+```
+输入: [3,2,3]
+输出: 3
+```
+
+示例2:
+
+```
+输入: [2,2,1,1,1,2,2]
+输出: 2
+```
+
+### 题解
+
+#### 解法（80ms)
+
+
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var majorityElement = function(nums) {
+    var count = 1;
+    var result = nums[0];
+    for(var i = 1; i < nums.length; i++) {
+        if(count === 0) {
+            result = nums[i];
+            count = 1;
+        }else if(nums[i] === result) {
+            count++;
+        }else {
+            count--;
+        }
+    }
+    return result;
+};
+```
