@@ -1,3 +1,67 @@
+## 365、水壶问题
+
+[题目地址](https://leetcode-cn.com/problems/water-and-jug-problem/)
+
+### 题目描述
+有两个容量分别为 x升 和 y升 的水壶以及无限多的水。请判断能否通过使用这两个水壶，从而可以得到恰好 z升 的水？
+
+如果可以，最后请用以上水壶中的一或两个来盛放取得的 z升 水。
+
+你允许：
+
+- 装满任意一个水壶
+- 清空任意一个水壶
+- 从一个水壶向另外一个水壶倒水，直到装满或者倒空
+
+示例1:
+
+```
+输入: x = 3, y = 5, z = 4
+输出: True
+```
+
+示例2:
+
+```
+输入: x = 2, y = 6, z = 5
+输出: False
+```
+
+
+### 题解
+
+#### 解法（80ms)
+
+
+
+```javascript
+/**
+ * @param {number} x
+ * @param {number} y
+ * @param {number} z
+ * @return {boolean}
+ */
+var canMeasureWater = function(x, y, z) {
+    if( x + y < z) return false;
+    else {
+        if(x === 0 && y ===0){
+            return z === 0;
+        }else{
+            return z % gcd(x, y) === 0;
+        }
+    }
+};
+function gcd(x, y){
+    if(y === 0) return x;
+    else{
+        x %= y;
+    }
+    return gcd(y, x);
+}
+```
+
+
+
 ## 836、矩形重叠
 
 [题目地址](https://leetcode-cn.com/problems/rectangle-overlap/)
