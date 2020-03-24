@@ -1,60 +1,3 @@
-## 322、零钱兑换
-
-[题目地址](https://leetcode-cn.com/problems/coin-change/)
-
-### 题目描述
-给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回` -1`。
-
-示例1:
-
-```
-输入: coins = [1, 2, 5], amount = 11
-输出: 3 
-解释: 11 = 5 + 5 + 1
-```
-
-示例2:
-
-```
-输入: coins = [2], amount = 3
-输出: -1
-```
-
-**说明**:
-你可以认为每种硬币的数量是无限的。
-
-
-### 题解
-
-#### 解法（96ms)
-
-
-
-```javascript
-/**
- * @param {number[]} coins
- * @param {number} amount
- * @return {number}
- */
-var coinChange = function(coins, amount) {
-    if(amount === 0) return 0;
-    if(coins.length === 0) return -1;
-    var result = new Array(amount + 1).fill(Infinity);
-    result[0] = 0;
-    for(var i = 1;i < amount + 1; i++){
-        for(var j = 0;j < coins.length; j++){
-            if (i - coins[j] >= 0) {
-                result[i] = Math.min(result[i], result[i - coins[j]] + 1);
-            }
-        }
-    }
-    return result[amount] === Infinity ? -1 : result[amount];
-};
-```
-
-
-
-
 ## 121、买卖股票的最佳时机
 
 [题目地址](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
@@ -158,5 +101,124 @@ var lengthOfLIS = function(nums) {
         }
     }
     return max;
+};
+```
+
+
+
+
+## 322、零钱兑换
+
+[题目地址](https://leetcode-cn.com/problems/coin-change/)
+
+### 题目描述
+给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回` -1`。
+
+示例1:
+
+```
+输入: coins = [1, 2, 5], amount = 11
+输出: 3 
+解释: 11 = 5 + 5 + 1
+```
+
+示例2:
+
+```
+输入: coins = [2], amount = 3
+输出: -1
+```
+
+**说明**:
+你可以认为每种硬币的数量是无限的。
+
+
+### 题解
+
+#### 解法（96ms)
+
+
+
+```javascript
+/**
+ * @param {number[]} coins
+ * @param {number} amount
+ * @return {number}
+ */
+var coinChange = function(coins, amount) {
+    if(amount === 0) return 0;
+    if(coins.length === 0) return -1;
+    var result = new Array(amount + 1).fill(Infinity);
+    result[0] = 0;
+    for(var i = 1;i < amount + 1; i++){
+        for(var j = 0;j < coins.length; j++){
+            if (i - coins[j] >= 0) {
+                result[i] = Math.min(result[i], result[i - coins[j]] + 1);
+            }
+        }
+    }
+    return result[amount] === Infinity ? -1 : result[amount];
+};
+```
+
+
+
+
+## 面试题 17.16、按摩师
+
+[题目地址](https://leetcode-cn.com/problems/the-masseuse-lcci/)
+
+### 题目描述
+一个有名的按摩师会收到源源不断的预约请求，每个预约都可以选择接或不接。在每次预约服务之间要有休息时间，因此她不能接受相邻的预约。给定一个预约请求序列，替按摩师找到最优的预约集合（总预约时间最长），返回总的分钟数。
+
+**注意**：本题相对原题稍作改动
+
+示例1:
+
+```
+输入： [1,2,3,1]
+输出： 4
+解释： 选择 1 号预约和 3 号预约，总时长 = 1 + 3 = 4。
+```
+
+示例2:
+
+```
+输入： [2,7,9,3,1]
+输出： 12
+解释： 选择 1 号预约、 3 号预约和 5 号预约，总时长 = 2 + 9 + 1 = 12。
+```
+
+示例3:
+
+```
+输入： [2,1,4,5,3,1,1,3]
+输出： 12
+解释： 选择 1 号预约、 3 号预约、 5 号预约和 8 号预约，总时长 = 2 + 4 + 3 + 3 = 12。
+```
+
+
+### 题解
+
+#### 解法（52ms)
+
+
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var massage = function(nums) {
+    var len = nums.length;
+    if(len == 0) return 0;
+    else if(len == 1) return nums[0];
+    var result = [];
+    result[0] = nums[0];
+    result[1] = Math.max(nums[0], nums[1]);
+    for(var i = 2;i < len;i ++){
+        result[i] = Math.max(result[i -2] + nums[i], result[i - 1]);
+    }
+    return result[len - 1];
 };
 ```
