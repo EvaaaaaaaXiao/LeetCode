@@ -165,6 +165,28 @@ var removeDuplicates = function(nums) {
 
 
 
+#### 二刷（2021/05/27）
+
+这次有自己想到双指针**（解法二）**，不过一开始蒙头瞎写居然搞了两个for循环…结果还是没审好题，**只要返回长度就好**
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var removeDuplicates = function(nums) {
+    var i = 0;
+    for(var j = 1;j < nums.length;j++){
+        if(nums[j] != nums[i]){
+            i ++;
+            nums[i] = nums[j];
+        }
+    }
+    return ++i;
+};
+```
+
+
 
 
 ## 27、移除元素
