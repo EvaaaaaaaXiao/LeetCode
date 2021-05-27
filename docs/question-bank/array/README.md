@@ -738,58 +738,6 @@ var countArea = (grid, i, j, x, y) =>{
 
 
 
-## 921、排序数组
-
-[题目地址](https://leetcode-cn.com/problems/sort-an-array/)
-
-### 题目描述
-给你一个整数数组 `nums`，请你将该数组升序排列。
-
-示例1:
-
-```
-输入：nums = [5,2,3,1]
-输出：[1,2,3,5]
-```
-
-示例2:
-
-```
-输入：nums = [5,1,1,2,0,0]
-输出：[0,0,1,1,2,5]
-```
-
-**提示**: 
-1. `1 <= nums.length <= 50000`
-2. `-50000 <= nums[i] <= 50000`
-
-
-### 题解
-
-#### 解法（ms)
-
-冒泡
-
-```javascript
-/**
- * @param {number[]} nums
- * @return {number[]}
- */
-var sortArray = function(nums) {
-    for (let i = nums.length - 1; i >= 0 ; i--) {
-        for (let j = 0; j < i; j++) {
-            if (nums[j] > nums[j + 1]) {
-                [nums[j], nums[j + 1]] = [nums[j + 1], nums[j]]
-            }
-        }
-    }
-    return nums;
-};
-```
-
-
-
-
 ## 945、使数组唯一的最小增量
 
 [题目地址](https://leetcode-cn.com/problems/minimum-increment-to-make-array-unique/)
