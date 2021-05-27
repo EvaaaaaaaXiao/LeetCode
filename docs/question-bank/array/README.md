@@ -338,9 +338,112 @@ var searchInsert = function(nums, target) {
 
 
 
+## 999、车的可用捕获量
+
+[题目地址](https://leetcode-cn.com/problems/available-captures-for-rook/)
+
+### 题目描述
+在一个 8 x 8 的棋盘上，有一个白色车（rook）。也可能有空方块，白色的象（bishop）和黑色的卒（pawn）。它们分别以字符 “R”，“.”，“B” 和 “p” 给出。大写字符表示白棋，小写字符表示黑棋。
+
+车按国际象棋中的规则移动：它选择四个基本方向中的一个（北，东，西和南），然后朝那个方向移动，直到它选择停止、到达棋盘的边缘或移动到同一方格来捕获该方格上颜色相反的卒。另外，车不能与其他友方（白色）象进入同一个方格。
+
+返回车能够在一次移动中捕获到的卒的数量。
+
+示例1:
+
+```
+输入：[[".",".",".",".",".",".",".","."],[".",".",".","p",".",".",".","."],[".",".",".","R",".",".",".","p"],[".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".","."],[".",".",".","p",".",".",".","."],[".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".","."]]
+输出：3
+解释：
+在本例中，车能够捕获所有的卒。
+```
+
+示例2:
+
+```
+输入：[[".",".",".",".",".",".",".","."],[".","p","p","p","p","p",".","."],[".","p","p","B","p","p",".","."],[".","p","B","R","B","p",".","."],[".","p","p","B","p","p",".","."],[".","p","p","p","p","p",".","."],[".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".","."]]
+输出：0
+解释：
+象阻止了车捕获任何卒。
+```
+
+示例3:
+
+```
+输入：[[".",".",".",".",".",".",".","."],[".",".",".","p",".",".",".","."],[".",".",".","p",".",".",".","."],["p","p",".","R",".","p","B","."],[".",".",".",".",".",".",".","."],[".",".",".","B",".",".",".","."],[".",".",".","p",".",".",".","."],[".",".",".",".",".",".",".","."]]
+输出：3
+解释： 
+车可以捕获位置 b5，d6 和 f5 的卒。
+```
+
+**提示**：
+1. `board.length == board[i].length == 8`
+2. `board[i][j]` 可以是` 'R'`，`'.'`，`'B'` 或` 'p'`
+3. 只有一个格子上存在` board[i][j] == 'R'`
+
+### 题解
+
+#### 解法（68ms)
+
+
+
+```javascript
+/**
+ * @param {character[][]} board
+ * @return {number}
+ */
+var numRookCaptures = function(board) {
+    var result = 0;
+    for (var i = 0; i < 8; i++) {
+        for (var j = 0; j < 8; j++) {
+            if (board[i][j] == 'R') {
+                var m = i;
+                var n = j;
+                while (--m >= 0) {   
+                    if (board[m][n] == 'B') break;
+                    if (board[m][n] == 'p') {
+                        result++;
+                        break;
+                    }
+                }
+                m = i;
+                while (++m < 8) {
+                    if (board[m][n] == 'B') break;
+                    if (board[m][n] == 'p') {
+                        result++;
+                        break;
+                    }
+                }
+                m = i;
+                while (--n >= 0) {
+                    if (board[m][n] == 'B') break;
+                    if (board[m][n] == 'p') {
+                        result++;
+                        break;
+                    }
+                }
+                n = j;
+                while (++n < 8) {
+                    if (board[m][n] == 'B') break;
+                    if (board[m][n] == 'p') {
+                        result++;
+                        break;
+                    }
+                }
+                return result;
+            }
+        }
+    }
+};
+```
+
+
+
+
+
 ## 1013、将数组分成和相等的三个部分
 
-[题目地址](https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum/
+[题目地址](https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum/)
 
 ### 题目描述
 给你一个整数数组` A`，只有可以将其划分为三个和相等的非空部分时才返回` true`，否则返回 `false`。
@@ -654,6 +757,116 @@ var countArea = (grid, i, j, x, y) =>{
 }
 ```
 
+
+
+
+## 921、排序数组
+
+[题目地址](https://leetcode-cn.com/problems/sort-an-array/)
+
+### 题目描述
+给你一个整数数组 `nums`，请你将该数组升序排列。
+
+示例1:
+
+```
+输入：nums = [5,2,3,1]
+输出：[1,2,3,5]
+```
+
+示例2:
+
+```
+输入：nums = [5,1,1,2,0,0]
+输出：[0,0,1,1,2,5]
+```
+
+**提示**: 
+1. `1 <= nums.length <= 50000`
+2. `-50000 <= nums[i] <= 50000`
+
+
+### 题解
+
+#### 解法（ms)
+
+冒泡
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var sortArray = function(nums) {
+    for (let i = nums.length - 1; i >= 0 ; i--) {
+        for (let j = 0; j < i; j++) {
+            if (nums[j] > nums[j + 1]) {
+                [nums[j], nums[j + 1]] = [nums[j + 1], nums[j]]
+            }
+        }
+    }
+    return nums;
+};
+```
+
+
+
+
+## 945、使数组唯一的最小增量
+
+[题目地址](https://leetcode-cn.com/problems/minimum-increment-to-make-array-unique/)
+
+### 题目描述
+给定整数数组 A，每次 move 操作将会选择任意 `A[i]`，并将其递增` 1`。
+
+返回使` A `中的每个值都是唯一的最少操作次数。
+
+示例1:
+
+```
+输入：[1,2,2]
+输出：1
+解释：经过一次 move 操作，数组将变为 [1, 2, 3]。
+```
+
+示例2:
+
+```
+输入：[3,2,1,2,1,7]
+输出：6
+解释：经过 6 次 move 操作，数组将变为 [3, 4, 1, 2, 5, 7]。
+可以看出 5 次或 5 次以下的 move 操作是不能让数组的每个值唯一的。
+```
+
+**提示**: 
+1. `0 <= A.length <= 40000`
+2. `0 <= A[i] < 40000`
+
+
+### 题解
+
+#### 解法（160ms)
+
+
+
+```javascript
+/**
+ * @param {number[]} A
+ * @return {number}
+ */
+var minIncrementForUnique = function(A) {
+    if(A.length === 0) return 0;
+    A.sort((a,b) => a - b);
+    var result = 0;
+    for(var i = 0;i < A.length-1;i ++){
+        if(A[i] >= A[i+1]){
+            result = result + A[i] - A[i+1] + 1;
+            A[i+1] = A[i] + 1;
+        }
+    }
+    return result;
+};
+```
 
 
 

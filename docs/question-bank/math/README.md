@@ -1,3 +1,146 @@
+## 365、水壶问题
+
+[题目地址](https://leetcode-cn.com/problems/water-and-jug-problem/)
+
+### 题目描述
+有两个容量分别为 x升 和 y升 的水壶以及无限多的水。请判断能否通过使用这两个水壶，从而可以得到恰好 z升 的水？
+
+如果可以，最后请用以上水壶中的一或两个来盛放取得的 z升 水。
+
+你允许：
+
+- 装满任意一个水壶
+- 清空任意一个水壶
+- 从一个水壶向另外一个水壶倒水，直到装满或者倒空
+
+示例1:
+
+```
+输入: x = 3, y = 5, z = 4
+输出: True
+```
+
+示例2:
+
+```
+输入: x = 2, y = 6, z = 5
+输出: False
+```
+
+
+### 题解
+
+#### 解法（80ms)
+
+
+
+```javascript
+/**
+ * @param {number} x
+ * @param {number} y
+ * @param {number} z
+ * @return {boolean}
+ */
+var canMeasureWater = function(x, y, z) {
+    if( x + y < z) return false;
+    else {
+        if(x === 0 && y ===0){
+            return z === 0;
+        }else{
+            return z % gcd(x, y) === 0;
+        }
+    }
+};
+function gcd(x, y){
+    if(y === 0) return x;
+    else{
+        x %= y;
+    }
+    return gcd(y, x);
+}
+```
+
+
+
+## 892、三维形体的表面积
+
+[题目地址](https://leetcode-cn.com/problems/surface-area-of-3d-shapes/)
+
+### 题目描述
+在` N * N `的网格上，我们放置一些` 1 * 1 * 1 ` 的立方体。
+
+每个值` v = grid[i][j]` 表示` v `个正方体叠放在对应单元格` (i, j) `上。
+
+请你返回最终形体的表面积。
+
+示例1:
+
+```
+输入：[[2]]
+输出：10
+```
+
+示例2:
+
+```
+输入：[[1,2],[3,4]]
+输出：34
+```
+
+示例3:
+
+```
+输入：[[1,0],[0,2]]
+输出：16
+```
+
+示例4:
+
+```
+输入：[[1,1,1],[1,0,1],[1,1,1]]
+输出：32
+```
+
+示例5:
+
+```
+输入：[[2,2,2],[2,1,2],[2,2,2]]
+输出：46
+```
+
+**提示**：
+
+- `1 <= N <= 50`
+- `0 <= grid[i][j] <= 50`
+
+
+### 题解
+
+#### 解法（80ms)
+
+
+
+```javascript
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var surfaceArea = function(grid) {
+    var [n, result, r, c] = [grid.length, 0];
+    if (!n) return result;
+    for (r = 0; r < n; r++) {
+        for (c = 0; c < n; c++) {
+            if (grid[r][c] > 0) result += 4 * grid[r][c] + 2;
+            if (r - 1 >= 0) result -= 2 * (Math.min(grid[r][c], grid[r - 1][c]));
+            if (c - 1 >= 0) result -= 2 * (Math.min(grid[r][c], grid[r][c - 1]));
+        }
+    }
+    return result;
+};
+```
+
+
+
 ## 836、矩形重叠
 
 [题目地址](https://leetcode-cn.com/problems/rectangle-overlap/)
@@ -48,6 +191,112 @@ var isRectangleOverlap = function(rec1, rec2) {
     return !result;
 };
 ```
+
+
+
+## 914、卡牌分组
+
+[题目地址](https://leetcode-cn.com/problems/x-of-a-kind-in-a-deck-of-cards/)
+
+### 题目描述
+给定一副牌，每张牌上都写着一个整数。
+
+此时，你需要选定一个数字 `X`，使我们可以将整副牌按下述规则分成 1 组或更多组：
+
+- 每组都有` X` 张牌。
+- 组内所有的牌上都写着相同的整数。
+仅当你可选的` X >= 2` 时返回` true`。
+
+示例1:
+
+```
+输入：[1,2,3,4,4,3,2,1]
+输出：true
+解释：可行的分组是 [1,1]，[2,2]，[3,3]，[4,4]
+```
+
+示例2:
+
+```
+输入：[1,1,1,2,2,2,3,3]
+输出：false
+解释：没有满足要求的分组。
+```
+
+示例3:
+
+```
+输入：[1]
+输出：false
+解释：没有满足要求的分组。
+```
+
+示例4:
+
+```
+输入：[1,1]
+输出：true
+解释：可行的分组是 [1,1]
+```
+
+示例5:
+
+```
+输入：[1,1,2,2,2,2]
+输出：true
+解释：可行的分组是 [1,1]，[2,2]，[2,2]
+```
+
+**提示**：
+
+1. `1 <= deck.length <= 10000`
+2. `0 <= deck[i] < 10000`
+
+
+### 题解
+
+#### 解法（68ms)
+
+
+
+```javascript
+/**
+ * @param {number[]} deck
+ * @return {boolean}
+ */
+var hasGroupsSizeX = function(deck) {
+    if(deck.length === 0) return false;
+    var arr = [];
+    deck.forEach((item)=>{
+        arr[item] = arr[item] ? arr[item] + 1 : 1;
+    })
+    
+    var temp = [...new Set(arr)];
+    var result = 1;
+    if(temp.length) result = temp[0];
+    
+    while(temp.length > 1){
+        var num1 = temp[0], num2 = temp[1];
+        result = gcd(num1,num2)
+        if(result == 1){
+            return false
+        } else {
+            temp.splice(0, 2, result)
+        }
+    }
+    return result > 1 ? true : false;
+};
+function gcd(x,y){
+    var a = x%y;
+    while(a){
+        x = y;
+        y = a;
+        a = x%y;
+    }
+    return y;
+}
+```
+
 
 
 
@@ -130,3 +379,58 @@ var distributeCandies = function(candies, num_people) {
     return result;
 };
 ```
+
+
+
+
+
+## 面试题62、圆圈中最后剩下的数字
+
+[题目地址](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/)
+
+### 题目描述
+0,1……n-1这n个数字排成一个圆圈，从数字0开始，每次从这个圆圈里删除第m个数字。求出这个圆圈里剩下的最后一个数字。
+
+例如，0、1、2、3、4这5个数字组成一个圆圈，从数字0开始每次删除第3个数字，则删除的前4个数字依次是2、0、4、1，因此最后剩下的数字是3。
+
+示例1:
+
+```
+输入: n = 5, m = 3
+输出: 3
+```
+
+示例2:
+
+```
+输入: n = 10, m = 17
+输出: 2
+```
+
+**限制**：
+
+- `1 <= n <= 10^5`
+- `1 <= m <= 10^6`
+
+
+### 题解
+
+#### 解法（72ms)
+
+递归
+
+```javascript
+/**
+ * @param {number} n
+ * @param {number} m
+ * @return {number}
+ */
+var lastRemaining = function(n, m) {
+    var result = 0;
+    for(var i = 2; i <= n; i++) {
+        result = (m + result) % i;
+    }
+    return result;
+};
+```
+
