@@ -337,7 +337,7 @@ var searchInsert = function(nums, target) {
 
 
 
-## 122. 买卖股票的最佳时机 II
+## 122、 买卖股票的最佳时机 II
 
 [题目地址](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 
@@ -409,7 +409,61 @@ var maxProfit = function(prices) {
 
 
 
-## 189. 旋转数组
+## 169、多数元素
+
+[题目地址](https://leetcode-cn.com/problems/majority-element/)
+
+### 题目描述
+
+给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于` ⌊ n/2 ⌋ `的元素。
+
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+
+示例1:
+
+```
+输入: [3,2,3]
+输出: 3
+```
+
+示例2:
+
+```
+输入: [2,2,1,1,1,2,2]
+输出: 2
+```
+
+### 题解
+
+#### 解法（80ms)
+
+
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var majorityElement = function(nums) {
+    var count = 1;
+    var result = nums[0];
+    for(var i = 1; i < nums.length; i++) {
+        if(count === 0) {
+            result = nums[i];
+            count = 1;
+        }else if(nums[i] === result) {
+            count++;
+        }else {
+            count--;
+        }
+    }
+    return result;
+};
+```
+
+
+
+## 189、 旋转数组
 
 [题目地址](https://leetcode-cn.com/problems/rotate-array/)
 
@@ -506,6 +560,202 @@ var rotate = function(nums, k) {
             i_value = j_value;
         }
     }
+};
+```
+
+
+
+## 217、 存在重复元素
+
+[题目地址](https://leetcode-cn.com/problems/contains-duplicate/)
+
+### 题目描述
+
+给定一个整数数组，判断是否存在重复元素。
+
+如果存在一值在数组中出现至少两次，函数返回`true`。如果数组中每个元素都不相同，则返回`false`。
+
+示例1:
+
+```
+输入: [1,2,3,1]
+输出: true
+```
+
+示例2:
+
+```
+输入: [1,2,3,4]
+输出: false
+```
+
+示例3:
+
+```
+输入: [1,1,1,3,3,4,3,2,4,2]
+输出: true
+```
+
+
+### 题解
+
+#### 解法（96ms)
+
+
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var containsDuplicate = function(nums) {
+    var len = nums.length;
+    if(len == 1) return false;
+
+    var obj = {};
+    var result = false;
+    for(var i = 0;i < len;i ++){
+        if(obj[nums[i]]){
+            result = true;
+            break;
+        }else{
+            obj[nums[i]] = true;
+        }
+    }
+    return result;
+};
+```
+
+
+
+## 695、岛屿的最大面积
+
+[题目地址](https://leetcode-cn.com/problems/max-area-of-island/)
+
+### 题目描述
+
+给定一个包含了一些 0 和 1的非空二维数组` grid` , 一个**岛屿** 是由四个方向 (水平或垂直) 的` 1` (代表土地) 构成的组合。你可以假设二维矩阵的四个边缘都被水包围着。
+
+找到给定的二维数组中最大的岛屿面积。(如果没有岛屿，则返回面积为0。)
+
+示例1:
+
+```
+[[0,0,1,0,0,0,0,1,0,0,0,0,0],
+ [0,0,0,0,0,0,0,1,1,1,0,0,0],
+ [0,1,1,0,1,0,0,0,0,0,0,0,0],
+ [0,1,0,0,1,1,0,0,1,0,1,0,0],
+ [0,1,0,0,1,1,0,0,1,1,1,0,0],
+ [0,0,0,0,0,0,0,0,0,0,1,0,0],
+ [0,0,0,0,0,0,0,1,1,1,0,0,0],
+ [0,0,0,0,0,0,0,1,1,0,0,0,0]]
+```
+
+对于上面这个给定矩阵应返回` 6`。注意答案不应该是11，因为岛屿只能包含水平或垂直的四个方向的‘1’。
+
+示例2:
+
+```
+[[0,0,0,0,0,0,0,0]]
+```
+
+对于上面这个给定的矩阵, 返回` 0`。
+
+**注意**: 给定的矩阵`grid` 的长度和宽度都不超过 50。
+
+### 题解
+
+#### 解法（100ms)
+
+
+
+```javascript
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var maxAreaOfIsland = function(grid) {
+    var len = grid.length;
+    var len0 = grid[0].length;
+    var result = 0;
+    for(var i=0;i < len;i++){
+        for(var j=0;j < len0;j++){
+            if(grid[i][j] === 1){
+                result = Math.max(result,countArea(grid, i, j, len, len0));
+            }
+        }
+    }
+    return result;
+};
+
+var countArea = (grid, i, j, x, y) =>{
+    if(i<0 || i>=x || j<0 || j>=y || grid[i][j]==0) return 0;
+    grid[i][j] = 0;
+    var count = 1;
+    count += countArea(grid, i+1, j, x, y);
+    count += countArea(grid, i-1, j, x, y);
+    count += countArea(grid, i, j+1, x, y);
+    count += countArea(grid, i, j-1, x, y);
+    return count
+}
+```
+
+
+
+## 945、使数组唯一的最小增量
+
+[题目地址](https://leetcode-cn.com/problems/minimum-increment-to-make-array-unique/)
+
+### 题目描述
+
+给定整数数组 A，每次 move 操作将会选择任意 `A[i]`，并将其递增` 1`。
+
+返回使` A `中的每个值都是唯一的最少操作次数。
+
+示例1:
+
+```
+输入：[1,2,2]
+输出：1
+解释：经过一次 move 操作，数组将变为 [1, 2, 3]。
+```
+
+示例2:
+
+```
+输入：[3,2,1,2,1,7]
+输出：6
+解释：经过 6 次 move 操作，数组将变为 [3, 4, 1, 2, 5, 7]。
+可以看出 5 次或 5 次以下的 move 操作是不能让数组的每个值唯一的。
+```
+
+**提示**: 
+
+1. `0 <= A.length <= 40000`
+2. `0 <= A[i] < 40000`
+
+### 题解
+
+#### 解法（160ms)
+
+
+
+```javascript
+/**
+ * @param {number[]} A
+ * @return {number}
+ */
+var minIncrementForUnique = function(A) {
+    if(A.length === 0) return 0;
+    A.sort((a,b) => a - b);
+    var result = 0;
+    for(var i = 0;i < A.length-1;i ++){
+        if(A[i] >= A[i+1]){
+            result = result + A[i] - A[i+1] + 1;
+            A[i+1] = A[i] + 1;
+        }
+    }
+    return result;
 };
 ```
 
@@ -612,8 +862,6 @@ var numRookCaptures = function(board) {
 
 
 
-
-
 ## 1013、将数组分成和相等的三个部分
 
 [题目地址](https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum/)
@@ -679,6 +927,79 @@ var canThreePartsEqualSum = function(A) {
     if (target === 0 && count > 3) return true 
     return count === 3
 };
+```
+
+
+
+## 1160、拼写单词
+
+[题目地址](https://leetcode-cn.com/problems/find-words-that-can-be-formed-by-characters/)
+
+### 题目描述
+给你一份『词汇表』（字符串数组）` words` 和一张『字母表』（字符串）` chars`。
+
+假如你可以用` chars` 中的『字母』（字符）拼写出` words` 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。
+
+注意：每次拼写时，`chars` 中的每个字母都只能用一次。
+
+返回词汇表 `words` 中你掌握的所有单词的**长度之和**。
+
+示例1:
+
+```
+输入：words = ["cat","bt","hat","tree"], chars = "atach"
+输出：6
+解释： 
+可以形成字符串 "cat" 和 "hat"，所以答案是 3 + 3 = 6。
+```
+
+示例2:
+
+```
+输入：words = ["hello","world","leetcode"], chars = "welldonehoneyr"
+输出：10
+解释：
+可以形成字符串 "hello" 和 "world"，所以答案是 5 + 5 = 10。
+```
+
+**提示**：
+1. `1 <= words.length <= 1000`
+2. `1 <= words[i].length, chars.length <= 100`
+3. 所有字符串中都仅包含小写英文字母
+
+### 题解
+
+#### 解法（144ms)
+
+
+
+```javascript
+/**
+ * @param {string[]} words
+ * @param {string} chars
+ * @return {number}
+ */
+var countCharacters = function(words, chars) {
+    var result = 0;
+    for(item of words){
+        var str = chars;
+        var list = item.split('');
+        while(list.length > 0) {
+            var word = list[0];
+            if(str.indexOf(word) > -1){
+                list.shift();
+                str = str.replace(word,'');
+                continue;
+            }else{
+                break;
+            }
+        }
+        if(list.length === 0){
+            result += item.length;
+        }
+    }
+    return result;
+}
 ```
 
 
@@ -804,260 +1125,3 @@ var findContinuousSequence = function(target) {
 };
 ```
 
-
-
-## 169、多数元素
-
-[题目地址](https://leetcode-cn.com/problems/majority-element/)
-
-### 题目描述
-给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于` ⌊ n/2 ⌋ `的元素。
-
-你可以假设数组是非空的，并且给定的数组总是存在多数元素。
-
-示例1:
-
-```
-输入: [3,2,3]
-输出: 3
-```
-
-示例2:
-
-```
-输入: [2,2,1,1,1,2,2]
-输出: 2
-```
-
-### 题解
-
-#### 解法（80ms)
-
-
-
-```javascript
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var majorityElement = function(nums) {
-    var count = 1;
-    var result = nums[0];
-    for(var i = 1; i < nums.length; i++) {
-        if(count === 0) {
-            result = nums[i];
-            count = 1;
-        }else if(nums[i] === result) {
-            count++;
-        }else {
-            count--;
-        }
-    }
-    return result;
-};
-```
-
-
-
-
-## 695、岛屿的最大面积
-
-[题目地址](https://leetcode-cn.com/problems/max-area-of-island/)
-
-### 题目描述
-给定一个包含了一些 0 和 1的非空二维数组` grid` , 一个**岛屿** 是由四个方向 (水平或垂直) 的` 1` (代表土地) 构成的组合。你可以假设二维矩阵的四个边缘都被水包围着。
-
-找到给定的二维数组中最大的岛屿面积。(如果没有岛屿，则返回面积为0。)
-
-示例1:
-
-```
-[[0,0,1,0,0,0,0,1,0,0,0,0,0],
- [0,0,0,0,0,0,0,1,1,1,0,0,0],
- [0,1,1,0,1,0,0,0,0,0,0,0,0],
- [0,1,0,0,1,1,0,0,1,0,1,0,0],
- [0,1,0,0,1,1,0,0,1,1,1,0,0],
- [0,0,0,0,0,0,0,0,0,0,1,0,0],
- [0,0,0,0,0,0,0,1,1,1,0,0,0],
- [0,0,0,0,0,0,0,1,1,0,0,0,0]]
-```
-对于上面这个给定矩阵应返回` 6`。注意答案不应该是11，因为岛屿只能包含水平或垂直的四个方向的‘1’。
-
-示例2:
-
-```
-[[0,0,0,0,0,0,0,0]]
-```
-对于上面这个给定的矩阵, 返回` 0`。
-
-**注意**: 给定的矩阵`grid` 的长度和宽度都不超过 50。
-
-
-### 题解
-
-#### 解法（100ms)
-
-
-
-```javascript
-/**
- * @param {number[][]} grid
- * @return {number}
- */
-var maxAreaOfIsland = function(grid) {
-    var len = grid.length;
-    var len0 = grid[0].length;
-    var result = 0;
-    for(var i=0;i < len;i++){
-        for(var j=0;j < len0;j++){
-            if(grid[i][j] === 1){
-                result = Math.max(result,countArea(grid, i, j, len, len0));
-            }
-        }
-    }
-    return result;
-};
-
-var countArea = (grid, i, j, x, y) =>{
-    if(i<0 || i>=x || j<0 || j>=y || grid[i][j]==0) return 0;
-    grid[i][j] = 0;
-    var count = 1;
-    count += countArea(grid, i+1, j, x, y);
-    count += countArea(grid, i-1, j, x, y);
-    count += countArea(grid, i, j+1, x, y);
-    count += countArea(grid, i, j-1, x, y);
-    return count
-}
-```
-
-
-
-
-## 945、使数组唯一的最小增量
-
-[题目地址](https://leetcode-cn.com/problems/minimum-increment-to-make-array-unique/)
-
-### 题目描述
-给定整数数组 A，每次 move 操作将会选择任意 `A[i]`，并将其递增` 1`。
-
-返回使` A `中的每个值都是唯一的最少操作次数。
-
-示例1:
-
-```
-输入：[1,2,2]
-输出：1
-解释：经过一次 move 操作，数组将变为 [1, 2, 3]。
-```
-
-示例2:
-
-```
-输入：[3,2,1,2,1,7]
-输出：6
-解释：经过 6 次 move 操作，数组将变为 [3, 4, 1, 2, 5, 7]。
-可以看出 5 次或 5 次以下的 move 操作是不能让数组的每个值唯一的。
-```
-
-**提示**: 
-1. `0 <= A.length <= 40000`
-2. `0 <= A[i] < 40000`
-
-
-### 题解
-
-#### 解法（160ms)
-
-
-
-```javascript
-/**
- * @param {number[]} A
- * @return {number}
- */
-var minIncrementForUnique = function(A) {
-    if(A.length === 0) return 0;
-    A.sort((a,b) => a - b);
-    var result = 0;
-    for(var i = 0;i < A.length-1;i ++){
-        if(A[i] >= A[i+1]){
-            result = result + A[i] - A[i+1] + 1;
-            A[i+1] = A[i] + 1;
-        }
-    }
-    return result;
-};
-```
-
-
-
-## 1160、拼写单词
-
-[题目地址](https://leetcode-cn.com/problems/find-words-that-can-be-formed-by-characters/)
-
-### 题目描述
-给你一份『词汇表』（字符串数组）` words` 和一张『字母表』（字符串）` chars`。
-
-假如你可以用` chars` 中的『字母』（字符）拼写出` words` 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。
-
-注意：每次拼写时，`chars` 中的每个字母都只能用一次。
-
-返回词汇表 `words` 中你掌握的所有单词的**长度之和**。
-
-示例1:
-
-```
-输入：words = ["cat","bt","hat","tree"], chars = "atach"
-输出：6
-解释： 
-可以形成字符串 "cat" 和 "hat"，所以答案是 3 + 3 = 6。
-```
-
-示例2:
-
-```
-输入：words = ["hello","world","leetcode"], chars = "welldonehoneyr"
-输出：10
-解释：
-可以形成字符串 "hello" 和 "world"，所以答案是 5 + 5 = 10。
-```
-
-**提示**：
-1. `1 <= words.length <= 1000`
-2. `1 <= words[i].length, chars.length <= 100`
-3. 所有字符串中都仅包含小写英文字母
-
-### 题解
-
-#### 解法（144ms)
-
-
-
-```javascript
-/**
- * @param {string[]} words
- * @param {string} chars
- * @return {number}
- */
-var countCharacters = function(words, chars) {
-    var result = 0;
-    for(item of words){
-        var str = chars;
-        var list = item.split('');
-        while(list.length > 0) {
-            var word = list[0];
-            if(str.indexOf(word) > -1){
-                list.shift();
-                str = str.replace(word,'');
-                continue;
-            }else{
-                break;
-            }
-        }
-        if(list.length === 0){
-            result += item.length;
-        }
-    }
-    return result;
-}
-```
