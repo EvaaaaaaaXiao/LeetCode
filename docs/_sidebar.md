@@ -8,7 +8,7 @@
     * [树](question-bank/tree/)
   * 算法
     * [广度优先搜索](question-bank/breadth-first-search/)
-    * [动态规划](question-bank/dynamic-programming)
+    * [动态规划](question-bank/dynamic-programming/)
   * [数学](question-bank/math/)
 * 理论知识
   * [数据结构](theory/data-structure/)
