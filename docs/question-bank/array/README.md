@@ -715,6 +715,79 @@ var containsDuplicate = function(nums) {
 
 
 
+## 350、两个数组的交集II
+
+[题目地址](https://leetcode-cn.com/problems/intersection-of-two-arrays-ii/)
+
+### 题目描述
+
+给定两个数组，编写一个函数来计算它们的交集。
+
+示例1:
+
+```
+输入：nums1 = [1,2,2,1], nums2 = [2,2]
+输出：[2,2]
+```
+
+示例2:
+
+```
+输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+输出：[4,9]
+```
+
+**说明：**
+- 输出结果中每个元素出现的次数，应与元素在两个数组中出现次数的最小值一致。
+- 我们可以不考虑输出结果的顺序。
+
+**进阶：**
+- 如果给定的数组已经排好序呢？你将如何优化你的算法？
+- 如果*nums1*的大小比*nums2*小很多，哪种方法更优？
+- 如果*nums2*的元素存储在磁盘上，内存是有限的，并且你不能一次加载所有的元素到内存中，你该怎么办？
+
+### 题解
+
+#### 解法（76ms)
+
+循环第一个数组，将数组的元素作为key，以元素出现的次数作为value，再循环第二个数组，如果数组中的元素在map对象中存在，则将value减1，并且存入结果数组中，直到value为0，将key从map中删除
+
+```javascript
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersect = function(nums1, nums2) {
+    var myMap = new Map();
+    var result = [];
+    for(var i = 0;i < nums1.length;i ++){
+        var n = nums1[i];
+        if(myMap.has(n)){
+            myMap.set(n, myMap.get(n)+1);
+        }else{
+            myMap.set(n, 1);
+        }
+    }
+    for(var j = 0;j < nums2.length;j ++){
+        var m = nums2[j];
+        if(myMap.has(m)){
+            if(myMap.get(m) == 0){
+                myMap.delete(m);
+            }else{
+                result.push(m)
+                myMap.set(m, myMap.get(m)-1);
+            }
+        }else{
+            //
+        }
+    }
+    return result;
+}
+```
+
+
+
 ## 695、岛屿的最大面积
 
 [题目地址](https://leetcode-cn.com/problems/max-area-of-island/)
