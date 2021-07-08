@@ -519,6 +519,115 @@ var isValidSudoku = function(board) {
 ```
 
 
+## 48、旋转图像
+
+[题目地址](https://leetcode-cn.com/problems/rotate-image/)
+
+### 题目描述
+给定一个 *n × n* 的二维矩阵 `matrix` 表示一个图像。请你将图像顺时针旋转 90 度。
+
+你必须在 `原地` 旋转图像，这意味着你需要直接修改输入的二维矩阵。**请不要** 使用另一个矩阵来旋转图像。
+
+示例1:
+
+```
+输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+输出：[[7,4,1],[8,5,2],[9,6,3]]
+```
+
+示例2:
+
+```
+输入：matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+输出：[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+```
+
+示例3:
+
+```
+输入：matrix = [[1]]
+输出：[[1]]
+```
+
+示例4:
+
+```
+输入：matrix = [[1,2],[3,4]]
+输出：[[3,1],[4,2]]
+```
+
+**提示**：
+- `matrix.length == n`
+- `matrix[i].length == n`
+- `1 <= n <= 20`
+- `-1000 <= matrix[i][j] <= 1000`
+
+### 题解
+
+#### 解法（68 ms)
+
+最简单肯定就是用新数组存旋转后
+
+原地的话，让我想到了 `189、旋转数组` 里的环。
+- 四边形所以每个环的长度就是固定的4
+- 环的个数为四等分矩形后左上角的小矩形的元素个数，如果长度是奇数，那么为左上角小矩形完整元素个数+1
+
+
+```javascript
+/**
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+var rotate = function(matrix) {
+    var len = Math.ceil(matrix.length / 2);
+    var isOdd = (matrix.length % 2 == 0) ? 0 : 1 ; // 如果数组长度为奇数
+    var holdvalue = 0;
+    var oldvalue = 0;
+    var newi = 0, newj = 0;
+    var oldi = 0, oldj = 0;
+    for(var row = 0;row < (len - isOdd);row ++){
+        for(var column = 0;column < len;column ++){
+            oldi = row,oldj = column;
+            oldvalue = matrix[oldi][oldj];
+            for(var count = 0;count < 4;count ++){
+                newi = oldj;
+                newj = matrix.length - oldi - 1;
+                holdvalue = matrix[newi][newj];
+                matrix[newi][newj] = oldvalue;
+                oldvalue = holdvalue;
+                oldi = newi;
+                oldj = newj;
+            }
+        }
+    }
+};
+```
+
+看了官方题解，傻了我，4个的循环赋值可以直接写出来…何必搞那么多变量名…
+
+**整理后**
+
+```javascript
+/**
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+var rotate = function(matrix) {
+    var len = matrix.length;
+    var isOdd = (len % 2 == 0) ? 0 : 1 ;
+    var holdvalue = 0;
+    for(var row = 0;row < Math.ceil(len / 2) - isOdd;row ++){
+        for(var column = 0;column < Math.ceil(len / 2);column ++){
+            holdvalue = matrix[row][column];
+            matrix[row][column] = matrix[len - column - 1][row];
+            matrix[len - column - 1][row] = matrix[len - row - 1][len - column - 1];
+            matrix[len - row - 1][len - column - 1] = matrix[column][len - row - 1];
+            matrix[column][len - row - 1] = holdvalue;
+        }
+    }
+};
+```
+
 ## 66、 加一
 
 [题目地址](https://leetcode-cn.com/problems/plus-one/)
