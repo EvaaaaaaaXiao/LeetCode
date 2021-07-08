@@ -783,6 +783,87 @@ var containsDuplicate = function(nums) {
 
 
 
+## 283、移动零
+
+[题目地址](https://leetcode-cn.com/problems/move-zeroes/)
+
+### 题目描述
+
+给定一个数组 `nums`，编写一个函数将所有 `0` 移动到数组的末尾，同时保持非零元素的相对顺序。
+
+示例:
+
+```
+输入: [0,1,0,3,12]
+输出: [1,3,12,0,0]
+```
+
+**说明**
+
+1. 必须在原数组上操作，不能拷贝额外的数组。
+2. 尽量减少操作次数。
+
+
+### 题解
+
+#### 解法一（100ms)
+
+用双指针，`i` 指向重新赋值后的非零元素，`j` 指向原数组中的非零元素，当 `j` 走完了所有元素，剩下还未重新赋值后的数组元素均为`0
+
+
+
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function(nums) {
+    for(var i = 0,j = 0;i < nums.length;j ++){
+        if(nums[j] != 0){
+            if(j < nums.length){
+                nums[i] = nums[j];
+            }else{
+                nums[i] = 0;
+            }
+            i ++;
+        }
+    }
+};
+```
+
+#### 解法二（80ms)
+
+看了一下别人的题解，自己的解法一不太符合题意里的 `移动`
+
+解法二还是双指针，如果 `i` 指向的是零， `j` 指向的是非零，则进行交换
+
+**`交换用的是异或`**
+
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function(nums) {
+    for(var i = 0, j = 1;j < nums.length;){
+        if(nums[i] == 0){
+            if(nums[j] != 0){
+                nums[i] ^= nums[j];
+                nums[j] ^= nums[i];
+                nums[i] ^= nums[j];
+                i++;
+            }
+        }else{
+            i++;
+        }
+        j ++;
+    }
+};
+```
+
+
 ## 350、两个数组的交集II
 
 [题目地址](https://leetcode-cn.com/problems/intersection-of-two-arrays-ii/)
