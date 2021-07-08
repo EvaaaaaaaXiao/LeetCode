@@ -34,13 +34,13 @@ var twoSum = function(nums, target) {
 	var targetIndex = 0;
 	var result = [];
 	for(key in nums){
-	  targetIndex = nums.indexOf(target - nums[key]);
-		if(targetIndex > -1){
-      if(targetIndex != key){
-        result.push(key);
-        result.push(targetIndex);
-        break;
-      }
+	    targetIndex = nums.indexOf(target - nums[key]);
+	    if(targetIndex > -1){
+            if(targetIndex != key){
+                result.push(key);
+                result.push(targetIndex);
+                break;
+              }
 		}
 	}
 	return result;
@@ -86,6 +86,30 @@ var twoSum = function(nums, target) {
 - Map 是纯粹的 hash， 而 Object 还存在一些其他内在逻辑，所以在执行 delete 的时候会有性能问题。所以**写入删除密集**的情况应该使用 Map。
 - Map 会**按照插入顺序保持元素的顺序**，而Object做不到。
 - Map 在**存储大量元素**的时候性能表现更好，特别是在代码执行时**不能确定 key 的类型**的情况。
+
+
+
+#### 二刷（2021/07/08）
+
+开始尝试用Map对象啦，思路就像上面的解法二一样，不多说惹。
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(nums, target) {
+    var myMap = new Map();
+    for(var i = 0;i < nums.length;i ++){
+        if(myMap.has(target - nums[i])){
+            return [myMap.get(target - nums[i]), i];
+        }else{
+            myMap.set(nums[i],i);
+        }
+    }
+};
+```
 
 
 
