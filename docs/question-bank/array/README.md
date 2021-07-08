@@ -360,6 +360,165 @@ var searchInsert = function(nums, target) {
 ```
 
 
+
+## 36、有效的数独
+
+[题目地址](https://leetcode-cn.com/problems/valid-sudoku/)
+
+### 题目描述
+请你判断一个 `9x9` 的数独是否有效。只需要 **根据以下规则** ，验证已经填入的数字是否有效即可。
+
+1. 数字 `1-9` 在每一行只能出现一次。
+2. 数字 `1-9` 在每一列只能出现一次。
+3. 数字 `1-9` 在每一个以粗实线分隔的 `3x3` 宫内只能出现一次。（请参考示例图）
+
+数独部分空格内已填入了数字，空白格用 `'.'` 表示。
+
+**注意：**
+
+- 一个有效的数独（部分已被填充）不一定是可解的。
+- 只需要根据以上规则，验证已经填入的数字是否有效即可。
+
+示例1:
+
+```
+输入：board = 
+[["5","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+输出：true
+```
+
+示例2:
+
+```
+输入：board = 
+[["8","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+输出：false
+
+解释：除了第一行的第一个数字从 5 改为 8 以外，空格内其他数字均与 示例1 相同。 但由于位于左上角的 3x3 宫内有两个 8 存在, 因此这个数独是无效的。
+```
+
+**提示：**
+
+- `board.length == 9`
+- `board[i].length == 9`
+- `board[i][j]` 是一位数字或者 `'.'`
+
+
+### 题解
+
+#### 解法一（96ms)
+
+没头脑的按照3种规则比较值是否有效，因为数据量9x9是固定的，所以处理的量也不大
+
+```javascript
+/**
+ * @param {character[][]} board
+ * @return {boolean}
+ */
+var isValidSudoku = function(board) {
+    var rowMap = new Map();
+    var columMap = new Map();
+    var blockMap = new Map();
+    for(var i = 0;i < 9;i ++){
+        rowMap.clear();
+        for(var j = 0;j < 9;j ++){
+            var num = board[i][j];
+            if(num != '.'){
+                if(rowMap.has(num)){
+                    return false;
+                }else{
+                    rowMap.set(num, j);
+                }
+            }
+        }
+    }
+    for(var i = 0;i < 9;i ++){
+        columMap.clear();
+        for(var j = 0;j < 9;j ++){
+            var num = board[j][i];
+            if(num != '.'){
+                if(columMap.has(num)){
+                    return false;
+                }else{
+                    columMap.set(num, j);
+                }
+            }
+        }
+    }
+    for(var row = 0;row < 3;row ++){
+        for(var column = 0;column < 3;column ++){
+          blockMap.clear();
+          for(var i = 0;i < 3;i ++){
+            for(var j = 0;j < 3;j ++){
+                var num = board[row*3 + i][j + column*3];
+                if(num != '.'){
+                    if(blockMap.has(num)){
+                        return false;
+                    }else{
+                        blockMap.set(num, j);
+                    }
+                }
+            }
+          }
+        }
+    }
+    return true;
+};
+```
+
+
+
+#### 解法二（72ms)
+
+看到唯一又想到了Map类型，最近出现太多次了……
+
+但是想了下1-9的数字肯定会被后面相同值的覆盖，所以根据不同的规则制定命名规则确保唯一性，还是很无脑……
+
+
+```javascript
+/**
+ * @param {character[][]} board
+ * @return {boolean}
+ */
+var isValidSudoku = function(board) {
+    var myMap = new Map();
+    for(var i = 0;i < 9;i ++){
+        for(var j = 0;j < 9;j ++){
+            var num = board[i][j];
+            if(num != '.'){
+                var rowKey = j + 'r' + num; // 每行的key规则
+                var columnKey = i + 'c' + num; // 每列的key规则
+                var blockKey = Math.floor(j/3) + 'b' + Math.floor(i/3) + 'b' + num; // 每块的key规则
+                if(myMap.has(rowKey) || myMap.has(columnKey) || myMap.has(blockKey)){
+                    return false;
+                }
+                myMap.set(rowKey, 1);
+                myMap.set(columnKey, 1);
+                myMap.set(blockKey, 1);
+            }
+        }
+    }
+    return true;
+};
+```
+
+
 ## 66、 加一
 
 [题目地址](https://leetcode-cn.com/problems/plus-one/)
