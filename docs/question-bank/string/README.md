@@ -527,6 +527,94 @@ var minimumLengthEncoding = function(words) {
 
 
 
+## 242、有效的字母异位词
+
+[题目地址](https://leetcode-cn.com/problems/valid-anagram/)
+
+### 题目描述
+
+给定两个字符串 *s* 和 *t* ，编写一个函数来判断 *t* 是否是 *s* 的字母异位词。
+
+示例1:
+
+```
+输入: s = "anagram", t = "nagaram"
+输出: true
+```
+
+示例2:
+
+```
+输入: s = "rat", t = "car"
+输出: false
+```
+
+
+
+**提示**:
+
+- `1 <= s.length, t.length <= 5 * 10^4`
+- `s` 和 `t` 仅包含小写字母
+
+
+
+
+
+**进阶**: 如果输入字符串包含 unicode 字符怎么办？你能否调整你的解法来应对这种情况？
+
+
+
+### 题解
+
+#### 解法（104ms)
+
+想着满足 1.长度一样 2.每次字母出现的次数一样 ，就用Map对象存储字母出现的次数，因为长度是一样的，所以两个字符串可以同时进行次数的加减处理
+
+```javascript
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function(s, t) {
+    if(s.length != t.length) return false;
+    var smap = new Map();
+    for(var i = 0;i < s.length;i ++){
+        var sword = s[i];
+        var tword = t[i];
+        if(smap.has(sword)){
+            var count = smap.get(sword) + 1;
+            if(count == 0){
+                smap.delete(sword);
+            }else{
+                smap.set(sword,count);
+            }
+        }else{
+            smap.set(sword,1)
+        }
+
+        if(smap.has(tword)){
+            var count = smap.get(tword) - 1;
+            if(count == 0){
+                smap.delete(tword);
+            }else{
+                smap.set(tword,count);
+            }
+        }else{
+            smap.set(tword,-1)
+        }
+    }
+    if(smap.size > 0){
+        return false;
+    }
+    return true;
+};
+```
+
+
+
+
+
 ## 344、反转字符串
 
 [题目地址](https://leetcode-cn.com/problems/reverse-string/)
