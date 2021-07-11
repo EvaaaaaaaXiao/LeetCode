@@ -471,60 +471,6 @@ var isPalindrome = function(s) {
 
 
 
-## 125、验证回文串
-
-[题目地址](https://leetcode-cn.com/problems/valid-palindrome/)
-
-### 题目描述
-给定一个单词列表，我们将这个列表编码成一个索引字符串` S `与一个索引列表` A`。
-
-例如，如果这个列表是` ["time", "me", "bell"]`，我们就可以将其表示为` S = "time#bell#"` 和` indexes = [0, 2, 5]`。
-
-对于每一个索引，我们可以通过从字符串` S` 中索引的位置开始读取字符串，直到 "#" 结束，来恢复我们之前的单词列表。
-
-那么成功对给定单词列表进行编码的最小字符串长度是多少呢？
-
-示例:
-
-```
-输入: words = ["time", "me", "bell"]
-输出: 10
-说明: S = "time#bell#" ， indexes = [0, 2, 5] 。
-```
-
-提示：
-
-1. `1 <= words.length <= 2000`
-2. `1 <= words[i].length <= 7`
-3. 每个单词都是小写字母 。
-
-### 题解
-
-#### 解法（64ms)
-
-
-
-```javascript
-/**
- * @param {string[]} words
- * @return {number}
- */
-var minimumLengthEncoding = function(words) {
-    var map = new Set(words);
-    for(word of map) {
-        for (var i = 1; i < word.length; i++) {
-            var tmp = word.slice(i);
-            words.includes(tmp) && map.delete(tmp);
-        }
-    }
-    var result = 0;
-    map.forEach(v => result += v.length + 1)
-    return result;
-};
-```
-
-
-
 
 
 ## 242、有效的字母异位词
@@ -714,6 +660,80 @@ var firstUniqChar = function(s) {
         }
     }
     return -1;
+};
+```
+
+
+
+## 820、单词的压缩编码
+
+[题目地址](https://leetcode-cn.com/problems/short-encoding-of-words/)
+
+### 题目描述
+
+单词数组 `words` 的 有效编码 由任意助记字符串 `s` 和下标数组 `indices` 组成，且满足：
+
+- `words.length == indices.length`
+
+- 助记字符串 `s` 以` '#'` 字符结尾
+
+- 对于每个下标 `indices[i]` ，`s` 的一个从 `indices[i]` 开始、到下一个 `'#'` 字符结束（但不包括 `'#'`）的 子字符串 恰好与 `words[i]` 相等
+
+  
+
+  给你一个单词数组 `words` ，返回成功对 `words` 进行编码的最小助记字符串 `s` 的长度 。
+
+示例1:
+
+```
+输入：words = ["time", "me", "bell"]
+输出：10
+解释：一组有效编码为 s = "time#bell#" 和 indices = [0, 2, 5] 。
+words[0] = "time" ，s 开始于 indices[0] = 0 到下一个 '#' 结束的子字符串，如加粗部分所示 "time#bell#"
+words[1] = "me" ，s 开始于 indices[1] = 2 到下一个 '#' 结束的子字符串，如加粗部分所示 "time#bell#"
+words[2] = "bell" ，s 开始于 indices[2] = 5 到下一个 '#' 结束的子字符串，如加粗部分所示 "time#bell#"
+```
+
+
+
+示例2:
+
+```
+输入：words = ["t"]
+输出：2
+解释：一组有效编码为 s = "t#" 和 indices = [0] 。
+```
+
+
+
+提示：
+
+1. `1 <= words.length <= 2000`
+2. `1 <= words[i].length <= 7`
+3. `words[i]` 仅由小写字母组成
+
+### 题解
+
+#### 解法（64ms)
+
+
+
+```javascript
+/**
+ * @param {string[]} words
+ * @return {number}
+ */
+var minimumLengthEncoding = function(words) {
+    var map = new Set(words);
+    for(word of map) {
+        for (var i = 1; i < word.length; i++) {
+            var tmp = word.slice(i);
+            words.includes(tmp) && map.delete(tmp);
+        }
+    }
+    var result = 0;
+    map.forEach(v => result += v.length + 1)
+    return result;
 };
 ```
 
