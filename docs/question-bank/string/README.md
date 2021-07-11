@@ -578,6 +578,60 @@ var reverseString = function(s) {
 
 
 
+## 387、字符串中的第一个唯一字符
+
+[题目地址](https://leetcode-cn.com/problems/first-unique-character-in-a-string/)
+
+### 题目描述
+
+给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
+
+示例:
+
+```
+s = "leetcode"
+返回 0
+
+s = "loveleetcode"
+返回 2
+```
+
+**提示**：你可以假定该字符串只包含小写字母。
+
+
+### 题解
+
+#### 解法（104ms)
+
+使用Map对象存储每种字母的出现情况，本来是想存`[word , index]`，出现第二次第三次的时候就 `+1` ，但这个不好去界定它是`出现了多次`还是只是`index比较大`。所以就改成了出现第二次的时候，`将value改成-1`，这样在最终就可以直接获取第一个 `非-1` 的 `value`
+
+```javascript
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var firstUniqChar = function(s) {
+    var myMap = new Map();
+    for(var i = 0;i < s.length;i ++){
+        var word = s[i];
+        if(myMap.has(word)){
+            myMap.set(word, -1);
+        }else{
+            myMap.set(word, i);
+        }
+    }
+    for(const value of myMap.values()){
+        if(value != -1){
+            return value;
+        }
+    }
+    return -1;
+};
+```
+
+
+
+
 ## 1071、字符串的最大公因子
 
 [题目地址](https://leetcode-cn.com/problems/greatest-common-divisor-of-strings/)
