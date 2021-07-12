@@ -469,6 +469,28 @@ var isPalindrome = function(s) {
 };
 ```
 
+#### 二刷（2021/07/12)
+
+双指针 嗯 和以前一样的思路 也是和以前一样不会正则T T
+
+```javascript
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function(s) {
+    if(s == '') return true;
+    s = s.toLowerCase();
+    s = s.replace(/[^a-z0-9]+/g,"");
+    for(var i = 0,j = s.length - 1;i < j;i ++, j --){
+        if(s[i] != s[j]){
+            return false;
+        }
+    }
+    return true;
+};
+```
+
 
 
 
