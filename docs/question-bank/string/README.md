@@ -371,6 +371,42 @@ var strStr = function(haystack, needle) {
 
 
 
+#### 二刷（2021/07/15)
+
+呃呃 无脑暴力 下午犯困了
+
+```javascript
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+var strStr = function(haystack, needle) {
+    if(haystack.length < needle.length) return -1;
+    else if(needle.length == 0) return 0;
+    var result = -1;
+    for(var i = 0;i <= (haystack.length - needle.length);i++){
+        if(haystack[i] == needle[0]){
+            result = i;
+            for(var j = 1;j < needle.length;j ++){
+                if(haystack[i + j] != needle[j]){
+                    result = -1;
+                    break;
+                }
+            }
+            if(result >= 0){
+                return result;
+            }
+        }
+    }
+    return result;
+};
+```
+
+
+
+
+
 ## 38、外观数列
 
 [题目地址](https://leetcode-cn.com/problems/count-and-say/submissions/)
