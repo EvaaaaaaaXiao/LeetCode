@@ -502,6 +502,78 @@ var countAndSay = function(n) {
 };
 ```
 
+#### 二刷（2021/07/22)
+
+递归+双指针  （死活没想到正则 T T
+
+```javascript
+/**
+ * @param {number} n
+ * @return {string}
+ */
+var countAndSay = function(n) {
+    var result = "1";
+    if(n > 1){
+        for(;n > 1;n --){
+            result = getString(result);
+        }
+    }
+    return result;
+};
+function getString(str){
+    var newstr = "";
+    for(var i = 0,j = 0;j < str.length;j ++){
+        if(str[i] != str[j]){
+            newstr += (j - i) + str[i];
+            i = j;
+            if(i == (str.length - 1)){
+                newstr += (j - i + 1) + str[i];
+                break;
+            }
+        }else{
+            if(j == (str.length - 1)){
+                newstr += (j - i + 1) + str[i];
+                break;
+            }
+        }
+    }
+    return newstr;
+}
+```
+
+整理了一下
+
+```javascript
+/**
+ * @param {number} n
+ * @return {string}
+ */
+var countAndSay = function(n) {
+    if(n == 1) return "1";
+    var str = countAndSay(n-1);
+    var result = "";
+    for(var i = 0,j = 0;j < str.length;j ++){
+        if(str[i] != str[j]){
+            result += (j - i) + str[i];
+            i = j;
+            if(i == (str.length - 1)){
+                result += (j - i + 1) + str[i];
+                break;
+            }
+        }else{
+            if(j == (str.length - 1)){
+                result += (j - i + 1) + str[i];
+                break;
+            }
+        }
+    }
+    return result;
+};
+```
+
+
+
+
 
 
 ## 58、最后一个单词的长度
