@@ -308,6 +308,44 @@ var m = str.startsWith("world", 6); //true
 
 
 
+#### 二刷（2021/08/30)
+
+和上述解法思路是一样的
+
+- 当字符串数组为空，直接返回空字符串
+- 当公共前缀为空字符串，直接返回空字符串，无需往后匹配
+
+```javascript
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+    var result = strs[0];
+    for(var i = 1;i < strs.length;i ++){
+        var len = strs[i].length < result.length ? strs[i].length : result.length;
+        var newResult = '';
+        for(var j = 0;j < len;j ++){
+            if(strs[i][j] != result[j]){
+                break;
+            }
+            newResult += strs[i][j];
+        }
+        result = newResult;
+        if(result == ''){
+            break;
+        }
+    }
+    return result;
+};
+```
+
+
+
+
+
+
+
 ## 28、实现strStr()
 
 [题目地址](https://leetcode-cn.com/problems/implement-strstr/)
