@@ -1,3 +1,91 @@
+## 19、删除链表的倒数第 N 个结点
+
+[题目地址](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
+
+### 题目描述
+
+给你一个链表，删除链表的倒数第 `n` 个结点，并且返回链表的头结点。 
+
+**进阶：**你能尝试使用一趟扫描实现吗？
+
+示例1:
+
+```
+输入：head = [1,2,3,4,5], n = 2
+输出：[1,2,3,5]
+```
+
+示例2:
+
+```
+输入：head = [1], n = 1
+输出：[]
+```
+
+示例3:
+
+```
+输入：head = [1,2], n = 1
+输出：[1]
+```
+
+**提示：**
+
+- 链表中结点的数目为 `sz`
+- `1 <= sz <= 30`
+- `0 <= Node.val <= 100`
+- `1 <= n <= sz`
+
+### 题解
+
+#### 解法（68ms)
+
+用**双指针**的思想
+
+1、先设置一个节点 `dummyHead` 用于指向 `head`
+
+2、设定 `fastNode` 和 `slowNode` ，初始都指向虚拟节点 `dummyHead` 
+
+3、移动 `fastNode` ，直到 `slowNode` 与 `fastNode` 之间相隔的元素个数为 n
+
+4、同时移动 `slowNode` 与 `fastNode` ，直到 `fastNode` 指向的为 `null`，即指向了末尾
+
+5、将 `slowNode` 的下一个节点指向下下个节点，即删除了目标节点
+
+
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+    var dummyHead = new ListNode();
+    dummyHead.next = head;
+    var fastNode = dummyHead;
+    var slowNode = dummyHead;
+    for(var i = 0; i < n; i++){
+        fastNode = fastNode.next;
+    }
+    while(fastNode.next != null){
+        slowNode = slowNode.next;
+        fastNode = fastNode.next;
+    }
+    slowNode.next = slowNode.next.next;
+    return dummyHead.next
+};
+```
+
+
+
 ## 21、合并两个有序链表
 
 [题目地址](https://leetcode-cn.com/problems/merge-two-sorted-lists/)
